@@ -1,0 +1,111 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import Header from '../components/Header.astro';
+
+type Props = CollectionEntry<'blog'>['data'];
+
+const { title, description, pubDate, updatedDate, heroImage, tags = [], sources = [] } = Astro.props;
+---
+
+<html lang="ja">
+	<head>
+		<BaseHead title={title} description={description} />
+		<style>
+			main {
+				width: calc(100% - 2em);
+				max-width: 100%;
+				margin: 0;
+			}
+			.hero-image {
+				width: 100%;
+			}
+			.hero-image img {
+				display: block;
+				margin: 0 auto;
+				border-radius: 12px;
+				box-shadow: var(--box-shadow);
+			}
+			.prose {
+				width: 720px;
+				max-width: calc(100% - 2em);
+				margin: auto;
+				padding: 1em;
+				color: rgb(var(--gray-dark));
+			}
+			.title {
+				margin-bottom: 1em;
+				padding: 1em 0;
+				text-align: center;
+				line-height: 1;
+			}
+			.title h1 {
+				margin: 0 0 0.5em 0;
+			}
+			.date {
+				margin-bottom: 0.5em;
+				color: rgb(var(--gray));
+			}
+			.sources {
+				margin-top: 3em;
+				padding: 1em 1.5em;
+				background: rgb(var(--gray-light));
+				border-radius: 8px;
+				font-size: 0.9em;
+			}
+			.sources h2 { font-size: 1.1em; margin: 0 0 0.5em; }
+			.sources .note { color: rgb(var(--gray)); margin: 0.5em 0 0; }
+			.tags span { margin-right: 0.75em; color: rgb(var(--accent)); }
+			.last-updated-on {
+				font-style: italic;
+			}
+		</style>
+	</head>
+
+	<body>
+		<Header />
+		<main>
+			<article>
+				<div class="hero-image">
+					{heroImage && <Image width={1020} height={510} src={heroImage} alt="" />}
+				</div>
+				<div class="prose">
+					<div class="title">
+						<div class="date">
+							<FormattedDate date={pubDate} />
+							{updatedDate && (
+								<div class="last-updated-on">
+									最終更新： <FormattedDate date={updatedDate} />
+								</div>
+							)}
+						</div>
+						<h1>{title}</h1>
+						<hr />
+					</div>
+					<slot />
+					{sources.length > 0 && (
+						<aside class="sources">
+							<h2>出典・参考</h2>
+							<ul>
+								{sources.map((s) => (
+									<li>
+										{s.url ? <a href={s.url} target="_blank" rel="noopener">{s.title}</a> : s.title}
+										{s.author && <span>（{s.author}）</span>}
+									</li>
+								))}
+							</ul>
+							<p class="note">本記事は上記の情報をもとに、筆者の視点で日本語で解説・再構成したものです。</p>
+						</aside>
+					)}
+					{tags.length > 0 && (
+						<p class="tags">{tags.map((t) => <span>#{t}</span>)}</p>
+					)}
+				</div>
+			</article>
+		</main>
+		<Footer />
+	</body>
+</html>

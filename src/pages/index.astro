@@ -1,0 +1,49 @@
+---
+import { getCollection } from 'astro:content';
+import BaseHead from '../components/BaseHead.astro';
+import Footer from '../components/Footer.astro';
+import FormattedDate from '../components/FormattedDate.astro';
+import Header from '../components/Header.astro';
+import { SITE_DESCRIPTION, SITE_TITLE } from '../consts';
+
+const posts = (await getCollection('blog'))
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+	.slice(0, 10);
+---
+
+<!doctype html>
+<html lang="ja">
+	<head>
+		<BaseHead title={SITE_TITLE} description={SITE_DESCRIPTION} />
+		<style>
+			.lead { font-size: 1.1em; color: rgb(var(--gray-dark)); }
+			.posts { list-style: none; padding: 0; }
+			.posts li { padding: 1em 0; border-bottom: 1px solid rgb(var(--gray-light)); }
+			.posts a { text-decoration: none; color: rgb(var(--black)); font-weight: 700; font-size: 1.15em; }
+			.posts a:hover { color: rgb(var(--accent)); }
+			.posts p { margin: 0.3em 0 0; color: rgb(var(--gray)); font-size: 0.95em; }
+			.date { color: rgb(var(--gray)); font-size: 0.85em; }
+		</style>
+	</head>
+	<body>
+		<Header />
+		<main>
+			<h1>{SITE_TITLE}</h1>
+			<p class="lead">
+				現役ITエンジニアが、生成AIの最新動向と「現場で本当に使える」実践ノウハウを日本語でお届けします。毎日更新中。
+			</p>
+			<h2>最新記事</h2>
+			<ul class="posts">
+				{posts.map((post) => (
+					<li>
+						<span class="date"><FormattedDate date={post.data.pubDate} /></span><br />
+						<a href={`/blog/${post.id}/`}>{post.data.title}</a>
+						<p>{post.data.description}</p>
+					</li>
+				))}
+			</ul>
+			<p><a href="/blog/">記事一覧へ →</a></p>
+		</main>
+		<Footer />
+	</body>
+</html>
