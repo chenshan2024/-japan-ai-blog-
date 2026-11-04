@@ -3,5 +3,5 @@ export const SITE_DESCRIPTION = 'ITエンジニアが生成AIの最新動向と�
 export const SOCIAL = {
 	bluesky: 'https://bsky.app/profile/japan3gun.bsky.social',
 	mastodon: 'https://mastodon.social/@welovelearning',
-	github: 'https://github.com/chenshan2024/japan-ai-blog',
+	github: 'https://github.com/chenshan2024/-japan-ai-blog-',
 };
