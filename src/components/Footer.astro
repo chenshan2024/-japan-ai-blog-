@@ -5,6 +5,12 @@ const today = new Date();
 
 <footer>
 	&copy; {today.getFullYear()} {SITE_TITLE}<br /><small>記事内の引用・参考情報は各出典元に帰属します。</small>
+	<nav class="legal-links">
+		<a href="/about">運営者情報</a>
+		<a href="/privacy">プライバシーポリシー</a>
+		<a href="/disclaimer">免責事項</a>
+		<a href="/contact">お問い合わせ</a>
+	</nav>
 	<div class="social-links">
 		<a href={SOCIAL.mastodon} rel="me" target="_blank">
 			<span class="sr-only">Mastodon</span>
@@ -53,6 +59,17 @@ const today = new Date();
 		background: linear-gradient(var(--gray-gradient)) no-repeat;
 		color: rgb(var(--gray));
 		text-align: center;
+	}
+	.legal-links {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0.5em 1.2em;
+		margin-top: 1em;
+		font-size: 0.9em;
+	}
+	.legal-links a {
+		color: rgb(var(--gray));
 	}
 	.social-links {
 		display: flex;

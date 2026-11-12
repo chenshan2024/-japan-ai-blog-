@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://japan.yujeff.dpdns.org/sitemap-index.xml
